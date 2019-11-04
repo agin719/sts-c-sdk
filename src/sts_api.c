@@ -75,6 +75,7 @@ sts_status_t get_federation_token(sts_options_t *options, sts_policy_t *policy, 
     }
 
 done:
+    BufferRelease(policy_str);
     BufferRelease(post_data);
     sts_release_context(ctx);
     return status;

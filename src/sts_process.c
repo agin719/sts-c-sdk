@@ -11,10 +11,10 @@ sts_context_t *sts_create_context()
     ctx->options = NULL;
     ctx->action = NULL;
     ctx->policy = NULL;
-    ctx->req = (sts_request_params_t *) malloc(sizeof(sts_request_params_t*));
+    ctx->req = (sts_request_params_t *) malloc(sizeof(sts_request_params_t));
     ctx->req->mod = NULL;
     ctx->req->body = NULL;
-    ctx->resp = (sts_response_params_t *) malloc(sizeof(sts_response_params_t*));
+    ctx->resp = (sts_response_params_t *) malloc(sizeof(sts_response_params_t));
     ctx->resp->body = NULL;
     ctx->resp->body_len = 0;
     ctx->resp->body_pos = 0;
