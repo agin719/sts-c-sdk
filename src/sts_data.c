@@ -3,23 +3,9 @@
 #include "sts_buf.h"
 #include <string.h>
 
-static void sort(sts_params_t *params[], int size) 
-{
-    int i, j; 
-    for (i = 0; i < size-1; i++) {
-        for (j = i+1; j < size; j++) {
-            if (strcmp(params[i]->key, params[j]->key) > 0) {
-                sts_params_t *tmp = params[i];
-                params[i] = params[j];
-                params[j] = tmp;
-            }
-        }
-    }
-}
-
 int compare(const void *x, const void *y) {
-    sts_params_t *px = (sts_params_t*) x;
-    sts_params_t *py = (sts_params_t*) y;
+    sts_params_t *px = (*(sts_params_t**) x);
+    sts_params_t *py = (*(sts_params_t**) y);
     return strcmp(px->key, py->key);
 }
 
@@ -88,12 +74,8 @@ int sts_build_body(sts_context_t *ctx, char **buf)
     add_params("name", "user");
     add_params("policy", ctx->policy);
 
-    sort(params, params_size);
-    //qsort(params, params_size, sizeof(sts_params_t*), compare);
-    /*
-    for (i = 0; i < params_size; i++) {
-        printf("%s\n", params[i]->key);
-    }*/
+    qsort(params, params_size, sizeof(sts_params_t*), compare);
+    
     char signature[256];
     sts_sign(signature, 256, params, params_size, ctx);
 
